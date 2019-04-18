@@ -1,7 +1,7 @@
 package commonBoxes
 
 import (
-	"github.com/panda-media/muxer-fmp4/format/AVPacket"
+	"github.com/NothingYF/muxer-fmp4/format/AVPacket"
 )
 
 func mdiaBox(packet *AVPacket.MediaPacket, arrays *MOOV_ARRAYS, timestamp uint64, timescale uint32) (box *MP4Box, err error) {

@@ -3,9 +3,9 @@ package commonBoxes
 import (
 	"errors"
 	"fmt"
-	"github.com/panda-media/muxer-fmp4/codec/AAC"
-	"github.com/panda-media/muxer-fmp4/codec/H264"
-	"github.com/panda-media/muxer-fmp4/format/AVPacket"
+	"github.com/NothingYF/muxer-fmp4/codec/AAC"
+	"github.com/NothingYF/muxer-fmp4/codec/H264"
+	"github.com/NothingYF/muxer-fmp4/format/AVPacket"
 	"strconv"
 	"time"
 )

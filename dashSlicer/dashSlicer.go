@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/panda-media/muxer-fmp4/codec/AAC"
-	"github.com/panda-media/muxer-fmp4/dashSlicer/AVSlicer"
-	"github.com/panda-media/muxer-fmp4/format/AVPacket"
-	"github.com/panda-media/muxer-fmp4/format/MP4"
-	"github.com/panda-media/muxer-fmp4/mpd"
+	"github.com/NothingYF/muxer-fmp4/codec/AAC"
+	"github.com/NothingYF/muxer-fmp4/dashSlicer/AVSlicer"
+	"github.com/NothingYF/muxer-fmp4/format/AVPacket"
+	"github.com/NothingYF/muxer-fmp4/format/MP4"
+	"github.com/NothingYF/muxer-fmp4/mpd"
 )
 
 type DASHSlicer struct {

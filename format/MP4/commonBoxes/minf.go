@@ -2,7 +2,7 @@ package commonBoxes
 
 import (
 	"errors"
-	"github.com/panda-media/muxer-fmp4/format/AVPacket"
+	"github.com/NothingYF/muxer-fmp4/format/AVPacket"
 )
 
 func minfBox(packet *AVPacket.MediaPacket, arrays *MOOV_ARRAYS) (box *MP4Box, err error) {

@@ -1,10 +1,85 @@
 package H264
 
 import (
-	"github.com/panda-media/muxer-fmp4/utils"
+	h "github.com/hori-ryota/go-h264/h264"
+	"fmt"
 )
 
 type SPS struct {
+	o	*h.SequenceParameterSet
+
+	width                                 int
+	height                                int
+
+	chroma_format_idc                     int
+	bit_depth_chroma_minus8               int
+	bit_depth_luma_minus8                 int
+	log2_max_pic_order_cnt_lsb_minus4     int
+	pic_order_cnt_type                    int
+	separate_colour_plane_flag            int
+	log2_max_frame_num_minus4             int
+	frame_mbs_only_flag                   int
+
+	vui	*VUI
+}
+
+type VUI struct {
+	timing_info_present_flag			int
+	time_scale							int
+	num_units_in_tick					int
+}
+
+func decodeSPS_RBSP(nal []byte) (sps *SPS) {
+	sps = &SPS{
+		o: &h.SequenceParameterSet{},
+	}
+
+	err := sps.o.UnmarshalBinary(nal)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	sps.width = (int(sps.o.PicWidthInMbsMinus1 + 1) * 16) - (int(sps.o.FrameCropRightOffset) * 2) - (int(sps.o.FrameCropLeftOffset) * 2)
+
+	FrameMbsOnlyFlag := 0
+	if sps.o.FrameMbsOnlyFlag {
+		FrameMbsOnlyFlag = 1
+	}
+	sps.height = ((2 - FrameMbsOnlyFlag) * (int(sps.o.PicHeightInMapUnitsMinus1) + 1) * 16) - int(sps.o.FrameCropBottomOffset)*2 - int(sps.o.FrameCropTopOffset)*2
+
+	sps.chroma_format_idc = int(sps.o.ChromaFormatIDC)
+	sps.bit_depth_chroma_minus8 = int(sps.o.BitDepthChromaMinus8)
+	sps.bit_depth_luma_minus8 = int(sps.o.BitDepthLumaMinus8)
+	sps.log2_max_pic_order_cnt_lsb_minus4 = int(sps.o.Log2MaxPicOrderCntLsbMinus4)
+	sps.pic_order_cnt_type = int(sps.o.PicOrderCntType)
+
+	if sps.o.SeparateColourPlaneFlag {
+		sps.separate_colour_plane_flag = 1
+	}
+
+	sps.log2_max_frame_num_minus4 = int(sps.o.Log2MaxFrameNumMinus4)
+
+	if sps.o.FrameMbsOnlyFlag {
+		sps.frame_mbs_only_flag = 1
+	}
+
+	if len(sps.o.VUIs) > 0 {
+		sps.vui = &VUI{}
+		if sps.o.VUIs[0].TimingInfoPresentFlag {
+			sps.vui.timing_info_present_flag = 1
+		}
+		sps.vui.num_units_in_tick = int(sps.o.VUIs[0].NumUnitsInTick)
+		sps.vui.time_scale = int(sps.o.VUIs[0].TimeScale)
+	}
+
+	return
+}
+
+
+/*
+type SPS struct {
+
 	profile_idc                           int
 	constraint_set_flags                  int
 	level_idc                             int
@@ -40,7 +115,9 @@ type SPS struct {
 	vui_parameters_present_flag           int
 	vui                                   *VUI
 }
+*/
 
+/*
 type VUI struct {
 	aspect_ratio_info_present_flag          int
 	aspect_ratio_idc                        int
@@ -92,8 +169,19 @@ type HRD struct {
 	dpb_output_delay_length_minus1          int
 	time_offset_length                      int
 }
+*/
+
+/*
+var f *os.File
 
 func decodeSPS_RBSP(nal []byte) (sps *SPS) {
+	if(f == nil){
+		f, _ = os.OpenFile("sps", os.O_CREATE | os.O_RDWR, 0666)
+	}
+
+	f.Write(nal)
+	f.Close()
+
 	reader := &utils.BitReader{}
 	reader.Init(nal)
 
@@ -299,3 +387,4 @@ func decodeHRD(reader *utils.BitReader) (hrd *HRD) {
 	hrd.time_offset_length = reader.ReadBits(5)
 	return
 }
+*/

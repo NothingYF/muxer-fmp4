@@ -21,6 +21,10 @@ type AVCDecoderConfigurationRecord struct {
 	Bit_depth_chroma_minus8      byte
 	NumOfSequenceParameterSetExt int
 	SequenceParameterSetExt      *list.List
+
+	Width						int
+	Height						int
+	FPS							int
 }
 
 func (this *AVCDecoderConfigurationRecord) AVCData() []byte {
@@ -159,7 +163,7 @@ func (this *AVCDecoderConfigurationRecord) AddSPS(sps []byte) {
 	}
 	this.SPS.PushBack(sps)
 	this.NumOfSequenceParameterSets = this.SPS.Len()
-	_, _, _, this.Chroma_format_idc, this.Bit_depth_luma_minus8, this.Bit_depth_chroma_minus8 = DecodeSPS(sps)
+	this.Width, this.Height, this.FPS, this.Chroma_format_idc, this.Bit_depth_luma_minus8, this.Bit_depth_chroma_minus8 = DecodeSPS(sps)
 	this.AVCProfileIndication = sps[1]
 	this.Profile_compatibility = sps[2]
 	this.AVCLevelIndication = sps[3]

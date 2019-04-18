@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"container/list"
 	"errors"
-	"github.com/panda-media/muxer-fmp4/codec/H264"
-	"github.com/panda-media/muxer-fmp4/format/AVPacket"
-	"github.com/panda-media/muxer-fmp4/format/MP4/commonBoxes"
+	"github.com/NothingYF/muxer-fmp4/codec/H264"
+	"github.com/NothingYF/muxer-fmp4/format/AVPacket"
+	"github.com/NothingYF/muxer-fmp4/format/MP4/commonBoxes"
 	"strconv"
 )
 

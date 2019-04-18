@@ -5,8 +5,8 @@ import (
 	"container/list"
 	"errors"
 	"fmt"
-	"github.com/panda-media/muxer-fmp4/format/AVPacket"
-	"github.com/panda-media/muxer-fmp4/format/MP4/commonBoxes"
+	"github.com/NothingYF/muxer-fmp4/format/AVPacket"
+	"github.com/NothingYF/muxer-fmp4/format/MP4/commonBoxes"
 )
 
 func NewMP4Muxer() *FMP4Muxer {

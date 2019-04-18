@@ -1,8 +1,8 @@
 package dash
 
 import (
-	"github.com/panda-media/muxer-fmp4/codec/H264"
-	"github.com/panda-media/muxer-fmp4/dashSlicer"
+	"github.com/NothingYF/muxer-fmp4/codec/H264"
+	"github.com/NothingYF/muxer-fmp4/dashSlicer"
 	"log"
 	"os"
 )

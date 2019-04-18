@@ -1,9 +1,9 @@
 package ws_fmp4
 
 import (
-	"github.com/panda-media/muxer-fmp4/codec/H264"
-	"github.com/panda-media/muxer-fmp4/format/AVPacket"
-	"github.com/panda-media/muxer-fmp4/format/MP4"
+	"github.com/NothingYF/muxer-fmp4/codec/H264"
+	"github.com/NothingYF/muxer-fmp4/format/AVPacket"
+	"github.com/NothingYF/muxer-fmp4/format/MP4"
 	"strconv"
 	"net/http"
 	"log"
