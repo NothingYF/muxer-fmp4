@@ -37,3 +37,8 @@ type FMP4Muxer struct {
 	timeSidxVideo   int64//fluse for sidx
 	mdat_size       int
 }
+
+func (muxer *FMP4Muxer) ResetTimestamp(dts int64) {
+	muxer.timeBeginVideo = dts
+	muxer.timeBeginAudio = dts
+}
