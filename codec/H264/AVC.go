@@ -22,9 +22,9 @@ type AVCDecoderConfigurationRecord struct {
 	NumOfSequenceParameterSetExt int
 	SequenceParameterSetExt      *list.List
 
-	Width						int
-	Height						int
-	FPS							int
+	Width  int
+	Height int
+	FPS    int
 }
 
 func (this *AVCDecoderConfigurationRecord) AVCData() []byte {

@@ -4,7 +4,7 @@ import (
 	"github.com/NothingYF/muxer-fmp4/format/AVPacket"
 )
 
-func trakBox(packet *AVPacket.MediaPacket, arrays *MOOV_ARRAYS, timestamp, duration uint64,timescale uint32) (box *MP4Box, err error) {
+func trakBox(packet *AVPacket.MediaPacket, arrays *MOOV_ARRAYS, timestamp, duration uint64, timescale uint32) (box *MP4Box, err error) {
 	box, err = NewMP4Box("trak")
 	if err != nil {
 		return

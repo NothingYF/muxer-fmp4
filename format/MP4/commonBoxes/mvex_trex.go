@@ -1,7 +1,5 @@
 package commonBoxes
 
-import ()
-
 type trexParam struct {
 	trackId                          uint32
 	default_sample_description_index uint32 //1

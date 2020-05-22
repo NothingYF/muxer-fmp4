@@ -13,8 +13,8 @@ type SlicerAAC struct {
 	codec        string
 }
 
-func (this *SlicerAAC) AddFrame(data []byte, timestamp int64,timescale int) (tag *AVPacket.MediaPacket) {
-	if data == nil || len(data) == 0||timescale==0 {
+func (this *SlicerAAC) AddFrame(data []byte, timestamp int64, timescale int) (tag *AVPacket.MediaPacket) {
+	if data == nil || len(data) == 0 || timescale == 0 {
 		return
 	}
 	if false == this.headerDecode {
@@ -24,7 +24,7 @@ func (this *SlicerAAC) AddFrame(data []byte, timestamp int64,timescale int) (tag
 			return
 		}
 
-		timestamp=timestamp*int64(this.asc.SampleRate())/int64(timescale)
+		//timestamp=timestamp*int64(this.asc.SampleRate())/int64(timescale)
 		this.headerDecode = true
 		tag = &AVPacket.MediaPacket{}
 		tag.PacketType = AVPacket.AV_PACKET_TYPE_AUDIO
@@ -36,7 +36,7 @@ func (this *SlicerAAC) AddFrame(data []byte, timestamp int64,timescale int) (tag
 		this.codec = "mp4a.40." + strconv.Itoa(this.asc.ObjectType())
 	} else {
 
-		timestamp=timestamp*int64(this.asc.SampleRate())/int64(timescale)
+		//timestamp=timestamp*int64(this.asc.SampleRate())/int64(timescale)
 		tag = &AVPacket.MediaPacket{}
 		tag.PacketType = AVPacket.AV_PACKET_TYPE_AUDIO
 		tag.Data = make([]byte, 2+len(data))

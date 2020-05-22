@@ -1,32 +1,32 @@
 package H264
 
 import (
-	h "github.com/hori-ryota/go-h264/h264"
 	"fmt"
+	h "github.com/hori-ryota/go-h264/h264"
 )
 
 type SPS struct {
-	o	*h.SequenceParameterSet
+	o *h.SequenceParameterSet
 
-	width                                 int
-	height                                int
+	width  int
+	height int
 
-	chroma_format_idc                     int
-	bit_depth_chroma_minus8               int
-	bit_depth_luma_minus8                 int
-	log2_max_pic_order_cnt_lsb_minus4     int
-	pic_order_cnt_type                    int
-	separate_colour_plane_flag            int
-	log2_max_frame_num_minus4             int
-	frame_mbs_only_flag                   int
+	chroma_format_idc                 int
+	bit_depth_chroma_minus8           int
+	bit_depth_luma_minus8             int
+	log2_max_pic_order_cnt_lsb_minus4 int
+	pic_order_cnt_type                int
+	separate_colour_plane_flag        int
+	log2_max_frame_num_minus4         int
+	frame_mbs_only_flag               int
 
-	vui	*VUI
+	vui *VUI
 }
 
 type VUI struct {
-	timing_info_present_flag			int
-	time_scale							int
-	num_units_in_tick					int
+	timing_info_present_flag int
+	time_scale               int
+	num_units_in_tick        int
 }
 
 func decodeSPS_RBSP(nal []byte) (sps *SPS) {
@@ -40,7 +40,7 @@ func decodeSPS_RBSP(nal []byte) (sps *SPS) {
 		return
 	}
 
-	sps.width = (int(sps.o.PicWidthInMbsMinus1 + 1) * 16) - (int(sps.o.FrameCropRightOffset) * 2) - (int(sps.o.FrameCropLeftOffset) * 2)
+	sps.width = (int(sps.o.PicWidthInMbsMinus1+1) * 16) - (int(sps.o.FrameCropRightOffset) * 2) - (int(sps.o.FrameCropLeftOffset) * 2)
 
 	FrameMbsOnlyFlag := 0
 	if sps.o.FrameMbsOnlyFlag {
@@ -75,7 +75,6 @@ func decodeSPS_RBSP(nal []byte) (sps *SPS) {
 
 	return
 }
-
 
 /*
 type SPS struct {

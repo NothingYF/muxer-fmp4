@@ -19,7 +19,7 @@ type DASHSlicer struct {
 	lastVideoStartTime   int64 //in pts
 	h264Transfer         AVSlicer.SlicerH264
 	videoTimescale       int
-	audioTimescale int
+	audioTimescale       int
 	aacTransfer          AVSlicer.SlicerAAC
 	audioHeaderMuxed     bool
 	adtsHeaderEncoed     bool
@@ -30,8 +30,9 @@ type DASHSlicer struct {
 	mpd                  *mpd.MPDDynamic
 	receiver             FMP4Receiver
 }
+
 //videoTimescale and audioTimescale for input
-func NEWSlicer(fps, videoTimescale,audioTimescale, minLengthMS, maxLengthMS, maxSegmentCountInMPD int, receiver FMP4Receiver) (slicer *DASHSlicer, err error) {
+func NEWSlicer(fps, videoTimescale, audioTimescale, minLengthMS, maxLengthMS, maxSegmentCountInMPD int, receiver FMP4Receiver) (slicer *DASHSlicer, err error) {
 	slicer = &DASHSlicer{}
 
 	if maxSegmentCountInMPD < 2 || nil == receiver {
@@ -53,7 +54,7 @@ func NEWSlicer(fps, videoTimescale,audioTimescale, minLengthMS, maxLengthMS, max
 	slicer.maxSegmentCountInMPD = maxSegmentCountInMPD
 	slicer.receiver = receiver
 	slicer.videoTimescale = videoTimescale
-	slicer.audioTimescale=audioTimescale
+	slicer.audioTimescale = audioTimescale
 
 	slicer.h264Transfer.Init(fps)
 	slicer.init()
@@ -80,8 +81,8 @@ func (this *DASHSlicer) AddH264Nals(data []byte, timestamp int64) (err error) {
 }
 
 //add nal,four bytes network byte order size+ nal data......
-func (this *DASHSlicer) AddH264Frame(nal []byte, timestamp int64,compositionTime int) (err error) {
-	tags,err:=this.h264Transfer.AddFrame(nal,timestamp,compositionTime)
+func (this *DASHSlicer) AddH264Frame(nal []byte, timestamp int64, compositionTime int) (err error) {
+	tags, err := this.h264Transfer.AddFrame(nal, timestamp, compositionTime)
 	if err != nil || tags == nil || tags.Len() == 0 {
 		return
 	}
@@ -101,7 +102,7 @@ func (this *DASHSlicer) appendH264Tag(tag *AVPacket.MediaPacket) (err error) {
 
 	if this.videoHeaderMuxed == false && tag.Data[0] == 0x17 && tag.Data[1] == 0 {
 		this.lastVideoStartTime = tag.TimeStamp
-		err = this.muxerV.SetVideoHeader(tag,uint32(this.videoTimescale))
+		err = this.muxerV.SetVideoHeader(tag, uint32(this.videoTimescale))
 		if err != nil {
 			err = errors.New("set video header :" + err.Error())
 			return
@@ -121,7 +122,7 @@ func (this *DASHSlicer) appendH264Tag(tag *AVPacket.MediaPacket) (err error) {
 			if err != nil {
 				return err
 			}
-			if duration==0{
+			if duration == 0 {
 				return err
 			}
 			this.mpd.SetVideoBitrate(bitrate)
@@ -168,7 +169,7 @@ func (this *DASHSlicer) AddAACADTSFrame(data []byte, timestamp int64) (err error
 
 //add one  aac frame
 func (this *DASHSlicer) AddAACFrame(data []byte, timestamp int64) (err error) {
-	tag := this.aacTransfer.AddFrame(data, timestamp,this.audioTimescale)
+	tag := this.aacTransfer.AddFrame(data, timestamp, this.audioTimescale)
 	if tag == nil {
 		err = errors.New("invalid aac data")
 		return

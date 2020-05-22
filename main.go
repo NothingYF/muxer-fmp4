@@ -1,9 +1,9 @@
 package main
 
 import (
+	"github.com/NothingYF/muxer-fmp4/example/ws_fmp4"
 	//"github.com/NothingYF/muxer-fmp4/example/dash"
 	"log"
-	"github.com/NothingYF/muxer-fmp4/example/ws_fmp4"
 )
 
 func main() {

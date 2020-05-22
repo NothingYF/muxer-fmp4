@@ -53,10 +53,10 @@ func (this *FMP4Muxer)addPacketTimestamp(timestamp int64,packettype int){
 	case AVPacket.AV_PACKET_TYPE_AUDIO:
 		if 0==this.timeBeginAudio{
 			this.timeBeginAudio=timestamp
-			if nil==this.videoHeader{
+			//if nil==this.videoHeader{
 				this.timeSlicedAudio =timestamp
 				this.timeSidxAudio =timestamp
-			}
+			//}
 		}
 		this.timeNowAudio=timestamp
 	case AVPacket.AV_PACKET_TYPE_VIDEO:

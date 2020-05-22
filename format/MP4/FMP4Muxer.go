@@ -27,14 +27,14 @@ type FMP4Muxer struct {
 	timescaleVideo  uint32
 
 	timeBeginVideo int64
-	timeNowVideo int64
+	timeNowVideo   int64
 	timeBeginAudio int64
-	timeNowAudio int64
+	timeNowAudio   int64
 
-	timeSlicedAudio int64//segment by video
-	timeSidxAudio   int64//flush for sidx
-	timeSlicedVideo int64//segment by key frame
-	timeSidxVideo   int64//fluse for sidx
+	timeSlicedAudio int64 //segment by video
+	timeSidxAudio   int64 //flush for sidx
+	timeSlicedVideo int64 //segment by key frame
+	timeSidxVideo   int64 //fluse for sidx
 	mdat_size       int
 }
 

@@ -137,8 +137,8 @@ func (this *MPDDynamic) AddVideoSlice(duration int, data []byte) (lastTimestamp 
 		err = errors.New("video info not seted")
 		return
 	}
-	if duration<=0{
-		err=errors.New("invalid video segment data")
+	if duration <= 0 {
+		err = errors.New("invalid video segment data")
 		return
 	}
 	this.muxVideo.Lock()
@@ -165,8 +165,8 @@ func (this *MPDDynamic) AddAudioSlice(duration int, data []byte) (lastTimestamp 
 		err = errors.New("audio info not seted")
 		return
 	}
-	if duration<=0{
-		err=errors.New("invalid audio segment data")
+	if duration <= 0 {
+		err = errors.New("invalid audio segment data")
 		return
 	}
 	this.muxAudio.Lock()
@@ -262,14 +262,14 @@ func (this *MPDDynamic) mpdAttrs(mpd *MPD) {
 		return
 	}()
 
-	if this.videoKeys.Len()!=0{
+	if this.videoKeys.Len() != 0 {
 		this.videoBufferTime(mpd)
-	}else if this.audioKeys.Len()!=0{
+	} else if this.audioKeys.Len() != 0 {
 		this.audioBufferTime(mpd)
 	}
 }
 
-func (this *MPDDynamic)videoBufferTime(mpd *MPD){
+func (this *MPDDynamic) videoBufferTime(mpd *MPD) {
 
 	minBufferTime := 0xfffffff
 	for _, e := range this.videoData {
@@ -279,10 +279,10 @@ func (this *MPDDynamic)videoBufferTime(mpd *MPD){
 	}
 	minBufferTime = minBufferTime * MillInSec / this.vide.timeScale
 
-	if this.minBufferMS<minBufferTime/3{
-		mpd.MinimumUpdatePeriod=this.generatePTimeMillSec(minBufferTime/2)
-	}else{
-		mpd.MinimumUpdatePeriod=this.generatePTimeMillSec(this.minBufferMS)
+	if this.minBufferMS < minBufferTime/3 {
+		mpd.MinimumUpdatePeriod = this.generatePTimeMillSec(minBufferTime / 2)
+	} else {
+		mpd.MinimumUpdatePeriod = this.generatePTimeMillSec(this.minBufferMS)
 	}
 	mpd.MinBufferTime = this.generatePTimeMillSec(minBufferTime)
 
@@ -301,7 +301,7 @@ func (this *MPDDynamic)videoBufferTime(mpd *MPD){
 	}()
 }
 
-func (this *MPDDynamic)audioBufferTime(mpd *MPD){
+func (this *MPDDynamic) audioBufferTime(mpd *MPD) {
 	minBufferTime := 0xfffffff
 	for _, e := range this.audioData {
 		if minBufferTime > e.d {
@@ -310,14 +310,14 @@ func (this *MPDDynamic)audioBufferTime(mpd *MPD){
 	}
 	minBufferTime = minBufferTime * MillInSec / this.audi.timescale
 
-	if this.minBufferMS<minBufferTime/3{
-		mpd.MinimumUpdatePeriod=this.generatePTimeMillSec(minBufferTime/2)
-	}else{
-		mpd.MinimumUpdatePeriod=this.generatePTimeMillSec(this.minBufferMS)
+	if this.minBufferMS < minBufferTime/3 {
+		mpd.MinimumUpdatePeriod = this.generatePTimeMillSec(minBufferTime / 2)
+	} else {
+		mpd.MinimumUpdatePeriod = this.generatePTimeMillSec(this.minBufferMS)
 	}
 	mpd.MinBufferTime = this.generatePTimeMillSec(minBufferTime)
 
-	mpd.SuggestedPresentationDelay=this.generatePTimeMillSec(0)
+	mpd.SuggestedPresentationDelay = this.generatePTimeMillSec(0)
 }
 
 func (this *MPDDynamic) adaptationSetVideo(period *PeriodXML) {

@@ -12,19 +12,19 @@ type testReceiver struct {
 	fpAudio *os.File
 }
 
-func (this *testReceiver)Init(saveAudio,saveVideo bool){
-	if saveAudio{
+func (this *testReceiver) Init(saveAudio, saveVideo bool) {
+	if saveAudio {
 		var err error
 		this.fpAudio, err = os.Create("audio.mp4")
-		if err!=nil{
+		if err != nil {
 			log.Fatal(err.Error())
 			return
 		}
 	}
-	if saveVideo{
+	if saveVideo {
 		var err error
-		this.fpVideo,err=os.Create("video.mp4")
-		if err!=nil{
+		this.fpVideo, err = os.Create("video.mp4")
+		if err != nil {
 			log.Fatal(err.Error())
 			return
 		}
@@ -32,47 +32,47 @@ func (this *testReceiver)Init(saveAudio,saveVideo bool){
 	}
 }
 
-func (this *testReceiver)Close(){
-	if this.fpAudio!=nil{
+func (this *testReceiver) Close() {
+	if this.fpAudio != nil {
 		this.fpAudio.Close()
-		this.fpAudio=nil
+		this.fpAudio = nil
 	}
-	if this.fpVideo!=nil{
+	if this.fpVideo != nil {
 		this.fpVideo.Close()
-		this.fpVideo=nil
+		this.fpVideo = nil
 	}
 }
 
 func (this *testReceiver) VideoHeaderGenerated(videoHeader []byte) {
 	log.Println("get videoHeader,length:", len(videoHeader))
-	if this.fpVideo!=nil{
+	if this.fpVideo != nil {
 		this.fpVideo.Write(videoHeader)
 	}
 }
 func (this *testReceiver) VideoSegmentGenerated(videoSegment []byte, timestamp int64, duration int) {
 	log.Println("get video segment,length:", len(videoSegment), "\ttimestamp:", timestamp, "\tduration:", duration)
-	if this.fpVideo!=nil{
+	if this.fpVideo != nil {
 		this.fpVideo.Write(videoSegment)
 	}
 }
 func (this *testReceiver) AudioHeaderGenerated(audioHeader []byte) {
 	log.Println("get audioHeader,length:", len(audioHeader))
-	if this.fpAudio!=nil{
+	if this.fpAudio != nil {
 		this.fpAudio.Write(audioHeader)
 	}
 }
 func (this *testReceiver) AudioSegmentGenerated(audioSegment []byte, timestamp int64, duration int) {
 	log.Println("get audio segment,length:", len(audioSegment), "\ttimestamp:", timestamp, "\tduration:", duration)
-	if this.fpAudio!=nil{
+	if this.fpAudio != nil {
 		this.fpAudio.Write(audioSegment)
 	}
 }
 
 func FlvFileToFMP4(flvFileName string) {
 	receiver := &testReceiver{}
-	receiver.Init(true,true)
+	receiver.Init(true, true)
 	defer receiver.Close()
-	slicer, err := dashSlicer.NEWSlicer(25, 1000, 1000,1000, 5000, 5, receiver)
+	slicer, err := dashSlicer.NEWSlicer(25, 1000, 1000, 1000, 5000, 5, receiver)
 	if err != nil {
 		log.Println(err.Error())
 	}
@@ -148,8 +148,8 @@ func FlvFileToFMP4(flvFileName string) {
 			videoCount++
 		} else if tag.TagType == FLV_TAG_Audio {
 			//audio timestamp ,translate to AudioSampeHz timescale
-			timestamp:=int64(tag.Timestamp*48000/1000)
-			timestamp=int64(tag.Timestamp)
+			timestamp := int64(tag.Timestamp * 48000 / 1000)
+			timestamp = int64(tag.Timestamp)
 			slicer.AddAACFrame(tag.Data[2:], timestamp)
 			audioCount++
 		}

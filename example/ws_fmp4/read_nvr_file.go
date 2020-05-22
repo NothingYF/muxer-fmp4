@@ -47,7 +47,6 @@ type Frame struct {
 	ALARMR []byte  //-
 }
 
-
 func read_nvr() {
 	//saveFile()
 	//return
@@ -63,8 +62,6 @@ func read_nvr() {
 	VRate := data.TimeScaleVideo
 	ARate := data.TimeScaleAudio
 	log.Println(sps, pps, VRate, ARate, len(data.Samples))
-
-
 
 	for _, sample := range data.Samples {
 		//sample.Sync key frame
